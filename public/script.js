@@ -1,38 +1,20 @@
-//fucntion to show selected section
-function showSection(sectionID){
-    //initially, select all sections
-    // use querySelectorAll for all sections with class content and homecontent
+function showSection(sectionID) {
+    const home = document.getElementById('home');
     const sections = document.querySelectorAll('.content');
-    const homesection = document.querySelectorAll('.homecontent');
 
-    //hide the resulting content sections using foreach
-    sections.forEach(section => {
-        section.style.display='none';
-    });
+    if (home) home.style.display = 'none';
+    sections.forEach(s => s.style.display = 'none');
 
-
-    //select the section that would
-    //be displayed when clicked
-    const activeSection = document.getElementById(sectionID);
-    if(activeSection){
-        activeSection.style.display='block';
-    }
+    const target = document.getElementById(sectionID);
+    if (target) target.style.display = 'block';
 }
 
-//for the insertion success
 window.onload = function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('status') === 'success') {
-        const toast = document.getElementById('success-toast');
-        toast.classList.remove('toast-hidden');
-        
-        // Hide it automatically after 3 seconds
-        setTimeout(() => {
-            toast.style.opacity = '0';
-            setTimeout(() => toast.classList.add('toast-hidden'), 500);
-        }, 3000);
-
-        // Clean the URL
-        window.history.replaceState({}, document.title, window.location.pathname);
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('status') === 'success') {
+        showSection('read');
+        alert("Operation Successful!");
+    } else {
+        showSection('home');
     }
-}
+};
